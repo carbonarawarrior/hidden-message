@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 
     char *m = MESSAGE;
     if (argc >= 2 && strcmp(PASS, argv[1]) == 0) {
-	printf(m);
+	printf("%s", m);
 	sendNotification(m);
     } else {
 	printf("%s: %s: command not found\n", parent, CMD);
