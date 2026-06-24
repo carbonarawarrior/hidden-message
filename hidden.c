@@ -26,6 +26,18 @@ void sendNotification(char *message) {
     }
 }
 
+void fakeerror(char *shell) {
+    if (strcmp(shell, "bash") == 0 || strcmp(shell, "sh") == 0) {
+	printf("%s: %s: command not found\n", shell, CMD);
+    } else if (strcmp(shell, "zsh") == 0) {
+	printf("%s: command not found: %s\n", shell, CMD);
+    } else if (strcmp(shell, "fish") == 0) {
+	printf("%s: Unknown command: %s\n", shell, CMD);
+    } else {
+	printf("%s: %s: command not found\n", shell, CMD);
+    }
+}
+
 int main(int argc, char **argv) {
     char path[256];
     snprintf(path, sizeof(path), "/proc/%d/comm", getppid());
@@ -49,7 +61,7 @@ int main(int argc, char **argv) {
 	printf("%s", m);
 	sendNotification(m);
     } else {
-	printf("%s: %s: command not found\n", parent, CMD);
+	fakeerror(parent);
     }
 
     return 0;
